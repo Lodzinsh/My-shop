@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Магазин</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background-color: #111;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product {
+      border: 1px solid #444;
+      background-color: #111;
+      padding: 15px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .product button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .cart {
+      padding: 20px;
+      background-color: #111;
+    }
+
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cart li {
+      padding: 5px 0;
+    }
+
+    form {
+      padding: 20px;
+      background-color: #111;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #000;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    input[type="submit"] {
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Мой Магазин</h1>
+  </header>
+
+  <section class="products">
+    <div class="product">
+      <h2>Товар 1</h2>
+      <p>Описание товара.</p>
+      <p>Цена: 100 грн</p>
+      <button onclick="addToCart('Товар 1', 100)">Добавить в корзину</button>
+    </div>
+    <div class="product">
+      <h2>Товар 2</h2>
+      <p>Описание товара.</p>
+      <p>Цена: 150 грн</p>
+      <button onclick="addToCart('Товар 2', 150)">Добавить в корзину</button>
+    </div>
+  </section>
+
+  <section class="cart">
+    <h2>Корзина</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Итого: <span id="total">0</span> грн</strong></p>
+  </section>
+
+  <form onsubmit="submitOrder(event)">
+    <h2>Оформить заказ</h2>
+    <input type="text" placeholder="Ваше имя" required>
+    <input type="tel" placeholder="Телефон" required>
+    <textarea placeholder="Комментарий к заказу"></textarea>
+    <input type="submit" value="Отправить заказ">
+  </form>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      const list = document.getElementById('cart-list');
+      list.innerHTML = '';
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.price} грн`;
+        list.appendChild(li);
+      });
+      document.getElementById('total').textContent = total;
+    }
+
+    function submitOrder(event) {
+      event.preventDefault();
+      alert('Заказ отправлен!');
+      cart = [];
+      total = 0;
+      updateCart();
+      event.target.reset();
+    }
+  </script>
+
+</body>
+</html>
